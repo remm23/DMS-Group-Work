@@ -1,4 +1,6 @@
 # Database code
+from tabulate import tabulate
+import numpy
 import sqlite3
 
 con = sqlite3.connect("example.db")
@@ -177,17 +179,56 @@ CREATE TABLE IF NOT EXISTS Promotion(
 );
 """)
 
+def delete(*args):
+	cur.execute("""
+	DELETE FROM {2} WHERE {0} = '{1}';
+	""".format(args[0],args[1],args[2]))
+	con.commit()
+
+def update(*args):
+	cur.execute("""
+		UPDATE {2} SET {0} = '{1}' WHERE {3} = {4};
+	""".format(args[0],args[1],args[2],args[3],args[4]))
+	con.commit()
+
+## Find a record
+def find(col = None, value = None, table = None):
+	
+	cur.execute("""
+		SELECT * FROM {0} WHERE {1} = {2};
+	""".format(table,col,value))
+
+	cols = list(map(lambda x: x[0], cur.description))
+	rows = cur.fetchall()
+	print(tabulate(rows,headers=cols))
+	con.commit()
+
+## Show all rows for a table
+def showall(table):
+	
+	cur.execute("""
+	SELECT * FROM {0};
+	""".format(table))
+	cols = list(map(lambda x: x[0], cur.description))
+
+	rows = cur.fetchall()	
+	# print data in a table
+	print(tabulate(rows,headers=cols))
+
+
+def close():
+	con.close()
 
 # cur.execute("""
 # INSERT INTO Customer
-# 	(id) VALUES (1234
+# 	(id) VALUES (1111
 # );
 # """)
 
 # cur.execute("""
 # INSERT INTO Customer
 # 	VALUES (
-# 		'1236',
+# 		'2113',
 # 		'Johndoe@example.com',
 # 		'password',
 # 		'John',
@@ -216,8 +257,9 @@ CREATE TABLE IF NOT EXISTS Promotion(
 # """)
 
 # Save the changes 
-con.commit()
+
 
 # Close the connection when complete
-con.close()
+
+
 
