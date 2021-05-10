@@ -8,6 +8,7 @@ prompt = ':>'
 def help():
 	print()
 	print('\t\t--- Database Management System Commands ---')
+	print('clear:\t\t\t\t\t\t\t\t\t\tClear the screen')
 	print('delete <column> <data> <table>:\t\t\t\t\t\t\tDelete a row from a table')
 	print('find <data> <column> <table>:\t\t\t\t\t\t\tFilter out rows to find user')
 	print('help:\t\t\t\t\t\t\t\t\t\tShow help menu')

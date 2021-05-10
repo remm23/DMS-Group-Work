@@ -1,6 +1,5 @@
 # Database code
 from tabulate import tabulate
-import numpy
 import sqlite3
 
 con = sqlite3.connect("example.db")
